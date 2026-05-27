@@ -1,0 +1,94 @@
+{
+    "info": {
+        "name": "Quiz App API",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Auth",
+            "item": [
+                {
+                    "name": "Register",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            { "key": "Content-Type", "value": "application/json" }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"username\": \"testuser\",\n  \"email\": \"test@test.com\",\n  \"password\": \"password123\"\n}"
+                        },
+                        "url": {
+                            "raw": "http://localhost:5000/api/auth/register",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "5000",
+                            "path": ["api", "auth", "register"]
+                        }
+                    }
+                },
+                {
+                    "name": "Login",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            { "key": "Content-Type", "value": "application/json" }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"email\": \"test@test.com\",\n  \"password\": \"password123\"\n}"
+                        },
+                        "url": {
+                            "raw": "http://localhost:5000/api/auth/login",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "5000",
+                            "path": ["api", "auth", "login"]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Quiz",
+            "item": [
+                {
+                    "name": "Get Categories",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            { "key": "Authorization", "value": "Bearer {{token}}" }
+                        ],
+                        "url": {
+                            "raw": "http://localhost:5000/api/quiz/categories",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "5000",
+                            "path": ["api", "quiz", "categories"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Questions (Paginated)",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            { "key": "Authorization", "value": "Bearer {{token}}" }
+                        ],
+                        "url": {
+                            "raw": "http://localhost:5000/api/quiz/questions/1?page=1&limit=10",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "5000",
+                            "path": ["api", "quiz", "questions", "1"],
+                            "query": [
+                                { "key": "page", "value": "1" },
+                                { "key": "limit", "value": "10" }
+                            ]
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}
