@@ -187,10 +187,11 @@ exports.forgotPassword = async (req, res) => {
 };
 
 exports.resetPassword = async (req, res) => {
-    const { email, otp, new_password } = req.body;
+    const { email, otp } = req.body;
+    const new_password = req.body.new_password || req.body.newPassword || req.body.password;
 
     if (!email || !otp || !new_password) {
-        return res.status(400).json({ success: false, message: 'Email, otp, and new_password are required' });
+        return res.status(400).json({ success: false, message: 'Email, otp, and new_password (or newPassword/password) are required' });
     }
 
     try {

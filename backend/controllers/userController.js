@@ -50,14 +50,16 @@ exports.getUserStats = async (req, res) => {
             }
         });
     } catch (error) {
-        res.status(500).json({ status: 'error', message: error.message });
+        console.error(error);
+        res.status(500).json({ success: false, error: error.message });
     }
 };
 
 // Sync User data (updates last_synced_at and optionally user_level)
 exports.syncUser = async (req, res) => {
     const userId = req.user.id;
-    const level = req.body.level !== undefined ? req.body.level : req.body.user_level;
+    const body = req.body || {};
+    const level = body.level !== undefined ? body.level : body.user_level;
 
     try {
         let query;
@@ -90,7 +92,8 @@ exports.syncUser = async (req, res) => {
             message: 'Sync successful'
         });
     } catch (error) {
-        res.status(500).json({ status: 'error', message: error.message });
+        console.error(error);
+        res.status(500).json({ success: false, error: error.message });
     }
 };
 

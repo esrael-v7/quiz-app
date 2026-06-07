@@ -11,7 +11,10 @@ const {
     getFavourites,
     addFavourite,
     removeFavourite,
-    getLeaderboard
+    getLeaderboard,
+    getAdminQuestions,
+    updateAdminQuestion,
+    deleteAdminQuestion
 } = require('../controllers/quizController');
 const { protect, adminOnly } = require('../middleware/authMiddleware');
 
@@ -32,5 +35,8 @@ router.get('/leaderboard', protect, getLeaderboard);
 // Admin routes
 router.post('/admin/categories', protect, adminOnly, addCategory);
 router.post('/admin/questions', protect, adminOnly, addQuestion);
+router.get('/admin/questions', protect, adminOnly, getAdminQuestions);
+router.put('/admin/questions/:id', protect, adminOnly, updateAdminQuestion);
+router.delete('/admin/questions/:id', protect, adminOnly, deleteAdminQuestion);
 
 module.exports = router;
