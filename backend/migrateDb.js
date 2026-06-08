@@ -49,6 +49,20 @@ async function runMigration() {
     `);
     
     console.log('Tables created successfully.');
+    
+    console.log('Updating foreign key constraints for cascade delete...');
+    await pool.query(`
+      ALTER TABLE quiz_history 
+      DROP CONSTRAINT IF EXISTS quiz_history_user_id_fkey,
+      ADD CONSTRAINT quiz_history_user_id_fkey 
+      FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE;
+
+      ALTER TABLE user_favourites 
+      DROP CONSTRAINT IF EXISTS user_favourites_user_id_fkey,
+      ADD CONSTRAINT user_favourites_user_id_fkey 
+      FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE;
+    `);
+    console.log('Foreign key constraints updated successfully.');
   } catch (err) {
     console.error('Migration error:', err);
   } finally {

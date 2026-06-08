@@ -97,3 +97,31 @@ exports.syncUser = async (req, res) => {
     }
 };
 
+// Delete User Account
+exports.deleteAccount = async (req, res) => {
+    try {
+        // Retrieve userId from the authenticated request object
+        const userId = req.user.id; 
+
+        // Execute deletion - Foreign Key Cascading will handle related tables
+        const result = await clientPool.query('DELETE FROM users WHERE id = $1', [userId]);
+        
+        if (result.rowCount === 0) {
+            return res.status(404).json({ 
+                success: false, 
+                message: "User account not found." 
+            });
+        }                                                                                                                                                                                                                                               
+        res.status(200).json({
+            success: true,
+            message: "Account and all associated data deleted successfully."
+        });
+    } catch (error) {
+        console.error("Delete Account Error:", error);
+        res.status(500).json({ 
+            success: false, 
+            message: "Internal server error during account deletion." 
+        });
+    }
+};
+

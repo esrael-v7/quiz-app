@@ -8,7 +8,15 @@ exports.getCategories = async (req, res) => {
         const cachedCats = cache.get('categories');
         if (cachedCats) return res.json({ status: 'success', data: cachedCats });
 
-        const { rows } = await clientPool.query('SELECT * FROM categories');
+        const query = `
+            SELECT c.*, CAST(COUNT(q.id) AS INTEGER) AS question_count
+            FROM categories c
+            LEFT JOIN questions q ON c.id = q.category_id
+            GROUP BY c.id
+            ORDER BY c.id ASC
+        `;
+        const { rows } = await clientPool.query(query);
+        
         cache.set('categories', rows);
         res.json({ status: 'success', data: rows });
     } catch (error) {

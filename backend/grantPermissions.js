@@ -23,8 +23,8 @@ async function grantPermissions() {
     console.log('✓ Granted USAGE, SELECT on password_reset_codes_id_seq');
     
     // Also grant permissions on users table if needed
-    await pool.query(`GRANT SELECT, UPDATE ON users TO ${clientUser};`);
-    console.log('✓ Granted SELECT, UPDATE on users table');
+    await pool.query(`GRANT SELECT, UPDATE, DELETE ON users TO ${clientUser};`);
+    console.log('✓ Granted SELECT, UPDATE, DELETE on users table');
 
     // Grant permissions on user_favourites and user_answers tables
     await pool.query(`GRANT SELECT, INSERT, UPDATE, DELETE ON user_favourites TO ${clientUser};`);
